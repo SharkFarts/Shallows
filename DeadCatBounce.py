@@ -30,6 +30,3 @@ def assess_dead_cat_bounce(ticker_symbol):
         print(f'{ticker_symbol} shows signs of a potential dead cat bounce.')
     else:
         print(f'{ticker_symbol} does not show clear signs of a dead cat bounce.')
-
-# Example: Assessing Apple Inc. (AAPL) for a dead cat bounce
-assess_dead_cat_bounce('EPIX')
