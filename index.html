@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharklandia Dashboard</title>
-<style>
+    <title>Your Website Title</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Include Plotly library -->
+
+    <style>
+        /* Your existing styles */
         body {
             background-color: #1a1a1a;
             color: #ffffff;
@@ -50,15 +53,60 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        /* Add a style for the Plotly chart container */
+        #plot {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Sharklandia</h1>
-        <p>This will be a dashboard for specific stock details, sentiment, and trend predictions. </p>
-        <p>More to come soon!</p>
-        
-         <img src="path/to/your/image.jpg" alt="Generated Image">
+        <h1>Welcome to Your Website</h1>
+        <p>This is the introduction to your dark-themed website. You can customize this text to provide a brief overview of your content, purpose, or any other important information you'd like to share.</p>
+        <p>Feel free to explore and discover more. If you have any questions or feedback, <a href="mailto:your@email.com">contact us</a>.</p>
+
+        <!-- Add the Plotly chart container -->
+        <div id="plot"></div>
     </div>
+
+    <script>
+        // Function to fetch Yahoo Finance data
+        async function fetchData(symbol) {
+            const response = await fetch(`https://query1.finance.yahoo.com/v7/finance/chart/${symbol}`);
+            const data = await response.json();
+            return data.chart.result[0];
+        }
+
+        // Function to create a Plotly chart
+        function createPlot(data) {
+            const trace = {
+                x: data.timestamp.map(ts => new Date(ts * 1000)),
+                y: data.indicators.quote[0].close,
+                type: 'scatter',
+                mode: 'lines',
+                name: data.meta.symbol
+            };
+
+            const layout = {
+                title: 'Stock Price Over Time',
+                xaxis: {
+                    title: 'Date'
+                },
+                yaxis: {
+                    title: 'Closing Price'
+                }
+            };
+
+            Plotly.newPlot('plot', [trace], layout);
+        }
+
+        // Example: Fetch data for Apple Inc. (AAPL)
+        fetchData('AAPL')
+            .then(createPlot)
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
 </body>
 </html>
